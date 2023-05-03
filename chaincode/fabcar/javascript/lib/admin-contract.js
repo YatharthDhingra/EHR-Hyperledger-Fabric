@@ -22,7 +22,7 @@ class AdminContract extends PrimaryContract {
         }
 
         //creating new Patient using patient class
-        let newPatient = new Patient(args.firstName, args.lastName, args.password, args.age,
+        let newPatient = new Patient(args.patientId , args.firstName, args.lastName, args.password, args.age,
             args.phoneNumber,  args.address, args.bloodGroup, args.changedBy, args.allergies);
         const exists = await this.patientExists(ctx, args.patientId); 
         //checking if patient exists already or not
