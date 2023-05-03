@@ -11,6 +11,7 @@ const path = require('path');
 const fs = require('fs');
 
 
+
 async function main() {
     try {
         // load the network configuration
@@ -38,10 +39,10 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('primary-contract');
+        const contract = network.getContract('patient');
 
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('readPatient' , 'PID0');
+        const result = await contract.evaluateTransaction('AdminContract:queryAllPatients');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.

@@ -14,22 +14,23 @@ class AdminContract extends PrimaryContract {
 
     //Create patient in the ledger
     async createPatient(ctx, args) {
-        args = JSON.parse(args); //args is a json object
+        //arg should be a json string
+        args = JSON.parse(args)
 
         if (args.password === null || args.password === '') {
             throw new Error(`Empty or null values should not be passed for password parameter`);
         }
 
         //creating new Patient using patient class
-        let newPatient = await new Patient(args.patientId, args.firstName, args.lastName, args.password, args.age,
-            args.phoneNumber, args.emergPhoneNumber, args.address, args.bloodGroup, args.changedBy, args.allergies);
-        const exists = await this.patientExists(ctx, newPatient.patientId); 
+        let newPatient = new Patient(args.firstName, args.lastName, args.password, args.age,
+            args.phoneNumber,  args.address, args.bloodGroup, args.changedBy, args.allergies);
+        const exists = await this.patientExists(ctx, args.patientId); 
         //checking if patient exists already or not
         if (exists) {
-            throw new Error(`The patient ${newPatient.patientId} already exists`);
+            throw new Error(`The patient ${args.patientId} already exists`);
         }
         //write on the ledger
-        await ctx.stub.putState(newPatient.patientId, JSON.stringify(newPatient));
+        await ctx.stub.putState(args.patientId, JSON.stringify(newPatient));
     }
 
     //Read patient details based on patientId
@@ -56,9 +57,8 @@ class AdminContract extends PrimaryContract {
         queryString.selector.docType = 'patient';
         queryString.selector.lastName = lastName;
         const response = await this.getQueryResultForQueryString(ctx, JSON.stringify(queryString)); //using the method from primary-contract
-        let asset = JSON.parse(response.toString());
 
-        return this.fetchLimitedFields(asset); //admin can see limited fields of a patient only
+        return this.fetchLimitedFields(response); //admin can see limited fields of a patient only
     }
 
     //Read patients based on firstName
@@ -68,12 +68,11 @@ class AdminContract extends PrimaryContract {
         queryString.selector.docType = 'patient';
         queryString.selector.firstName = firstName;
         const response = await this.getQueryResultForQueryString(ctx, JSON.stringify(queryString));
-        let asset = JSON.parse(response.toString());
 
-        return this.fetchLimitedFields(asset);
+        return this.fetchLimitedFields(response);
     }
 
-    //Retrieves all patients details
+    // Retrieves all patients details
     async queryAllPatients(ctx) {
         // let resultsIterator = await ctx.stub.getStateByRange('', '');
         // let asset = await this.getAllPatientResults(resultsIterator);
@@ -89,10 +88,10 @@ class AdminContract extends PrimaryContract {
         for (let i = 0; i < asset.length; i++) {
             const obj = asset[i];
             asset[i] = {
-                patientId: obj.Key,
-                firstName: obj.Record.firstName,
-                lastName: obj.Record.lastName,
-                phoneNumber: obj.Record.phoneNumber,
+                patientId: obj.key,
+                firstName: obj.value.firstName,
+                lastName: obj.value.lastName,
+                phoneNumber: obj.value.phoneNumber,
             };
         }
 

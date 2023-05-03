@@ -6,6 +6,7 @@
 
 'use strict';
 
+const AdminContract = require('./lib/admin-contract');
 const PrimaryContract = require('./lib/primary-contract');
 
-module.exports.contracts = [ PrimaryContract ];
+module.exports.contracts = [ PrimaryContract , AdminContract ];

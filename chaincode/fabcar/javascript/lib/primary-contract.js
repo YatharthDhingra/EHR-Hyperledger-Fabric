@@ -49,21 +49,22 @@ class PrimaryContract extends Contract {
         let resultsIterator = await ctx.stub.getQueryResult(queryString); //returns an iterator
         //iterator also returns historical data
         let results = await this.getAllPatientResults(resultsIterator); //get data from iterator
-        return JSON.stringify(results);
+        return results;
     }
+
     //we fetch all patients matching our queryString using the iterator
     //isHistory -> if we want history of the patient too or not
     async getAllPatientResults(iterator, isHistory=false) {
         let resultArray = []
         while(true){
             let res = await iterator.next() //this will give individual value
-            let resJson = {}  //to fetch the json data
             //res.value -> value + metadata
             //res.value.key -> key
             //res.value.value -> actual data
             if(res.value && res.value.value.toString()){
+                let resJson = {}  //to fetch the json data
                 resJson.key = res.value.key
-                resJson.value = res.value.value.toString('utf-8')
+                resJson.value = JSON.parse(res.value.value.toString('utf8'))
                 if(isHistory){   //if we also want the history , we also give the timestamp
                     resJson.timestamp = res.value.timestamp
                 }
@@ -76,5 +77,6 @@ class PrimaryContract extends Contract {
             }
         }
     }
+    
 }
 module.exports = PrimaryContract;

@@ -1,2 +1,4 @@
 changed index.js in chaincode folder
-changed fabcar to primary-contract in startFabric and query.js
+changed fabcar to patient in startFabric and query.js
+Each transaction must be queried like this 'ClassName:functionName'
+deletePatient and createPatient -> invoke.js
