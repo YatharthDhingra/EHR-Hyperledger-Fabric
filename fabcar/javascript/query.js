@@ -38,10 +38,10 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('fabcar');
+        const contract = network.getContract('primary-contract');
 
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('readData' , 'patient1');
+        const result = await contract.evaluateTransaction('readPatient' , 'PID0');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.

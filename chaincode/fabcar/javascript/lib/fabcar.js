@@ -22,6 +22,7 @@ class FabCar extends Contract {
     //ctx.stub is used to access APIs that provide a broad range of transaction processing operations from putState() and getState() to access the ledger, to getTxID() to retrieve the current transaction ID.
     async initLedger(ctx){
         await ctx.stub.putState("test" , "Hello World") //key value pair -> asset/data
+        console.log('fabcar chaincode running')
         return "Success"
     }
 

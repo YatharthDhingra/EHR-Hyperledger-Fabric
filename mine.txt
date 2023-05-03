@@ -1,0 +1,2 @@
+changed index.js in chaincode folder
+changed fabcar to primary-contract in startFabric and query.js

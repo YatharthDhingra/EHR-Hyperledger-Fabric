@@ -1,0 +1,53 @@
+[
+    {
+        "firstName": "Yatharth",
+        "lastName": "Dhingra",
+        "age": "20",
+        "phoneNumber": "+919660847421",
+        "address": "Dhingra Bhawan, Vikas Path, Alwar",
+        "bloodGroup": "O+",
+        "allergies": "No",
+        "symptoms": "Cholesterol, Total 250 mg/dl",
+        "diagnosis": "High Cholesterol",
+        "treatment": "Vasolip 10 mg everyday",
+        "followUp": "6 Months",
+        "permissionGranted": ["hosp1admin", "hosp2admin"],
+        "changedBy": "initLedger",
+        "password": "ee6affdb08c3ef9c6444816329b56250ae42a2149b3e72136251a7d8340de43b",
+        "pwdTemp": true
+    },
+    {
+        "firstName": "Siddhant",
+        "lastName": "Gangwar",
+        "age": "60",
+        "phoneNumber": "+919828273373",
+        "address": "Mainzer landstrasse 134, 60326 Frankfurt am Main",
+        "bloodGroup": "B+",
+        "allergies": "No",
+        "symptoms": "Heart Burn, shortness of breath, Acidity",
+        "diagnosis": "Esophagitis",
+        "treatment": "omeprazole 40 mg for 10 days before food",
+        "followUp": "2 Weeks",
+        "permissionGranted": ["hosp1admin", "hosp2admin"],
+        "changedBy": "initLedger",
+        "password": "fd1e5d642da134218f1cc5c260feb3e4042658a35d78c4eb2fe2b2f1c7e7795b",
+        "pwdTemp": true
+    },
+    {
+        "firstName": "Ravi",
+        "lastName": "Sharma",
+        "age": "63",
+        "phoneNumber": "+919660855555",
+        "address": "Genslerstraße 19, 60326 Berlin",
+        "bloodGroup": "B+",
+        "allergies": "No",
+        "symptoms": "Dizziness, Nausea, systolic-150, diastolic-110",
+        "diagnosis": "Hypertension",
+        "treatment": "CORBIS 5 mg one per day",
+        "followUp": "2 Weeks",
+        "permissionGranted": ["hosp1admin", "hosp2admin"],
+        "changedBy": "initLedger",
+        "password": "8c90267256e654ee3f77196ee12e952dc45cd970d030bfa069614cc2d923313c",
+        "pwdTemp": true
+    }
+]
