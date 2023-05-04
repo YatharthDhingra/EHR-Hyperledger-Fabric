@@ -40,18 +40,7 @@ async function main() {
         const contract = network.getContract('patient');
 
         // Submit the specified transaction.
-        await contract.submitTransaction('AdminContract:createPatient' , JSON.stringify({
-            "patientId" : "PID3",
-            "firstName" : "Paru",
-            "lastName": "Dhingra",
-            "password" : "password",
-            "age" : "25",
-            "phoneNumber" : "+919828274473",
-            "address" : "Wall Street, New York, USA",
-            "bloodGroup" : "B+",
-            "changedBy" : ["Org1MSP"],
-            "allergies" : "Tea"
-        }));
+        await contract.submitTransaction('PatientContract:deletePatient' , 'PID0');
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
