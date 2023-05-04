@@ -42,7 +42,7 @@ async function main() {
         const contract = network.getContract('patient');
 
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('PatientContract:getPatientHistory' , 'PID0');
+        const result = await contract.evaluateTransaction('DoctorContract:readPatient' , 'PID0');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.

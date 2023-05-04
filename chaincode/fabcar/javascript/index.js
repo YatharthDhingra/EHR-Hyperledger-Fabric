@@ -7,7 +7,8 @@
 'use strict';
 
 const AdminContract = require('./lib/admin-contract');
+const DoctorContract = require('./lib/doctor-contract');
 const PatientContract = require('./lib/patient-contract');
 const PrimaryContract = require('./lib/primary-contract');
 
-module.exports.contracts = [ PrimaryContract , AdminContract , PatientContract];
+module.exports.contracts = [ PrimaryContract , AdminContract , PatientContract , DoctorContract];
