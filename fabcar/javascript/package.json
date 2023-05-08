@@ -20,7 +20,8 @@
         "fabric-ca-client": "^2.2.4",
         "fabric-network": "^2.2.4",
         "mongodb": "^5.4.0",
-        "mongoose": "^7.1.0"
+        "mongoose": "^7.1.0",
+        "nodemon": "^2.0.22"
     },
     "devDependencies": {
         "chai": "^4.2.0",

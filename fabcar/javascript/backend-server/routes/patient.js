@@ -8,3 +8,5 @@ router.route('/patient/:patientId/history').get(getPatientHistoryById)
 router.route('/doctors/all').get(getAllDoctors)
 router.route('/patient/:patientId/grant/:doctorId').patch(grantAccessToDoctor)
 router.route('/patient/:patientId/revoke/:doctorId').patch(revokeAccessFromDoctor)
+
+module.exports  = router

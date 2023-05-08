@@ -53,5 +53,6 @@ exports.enrollAdminOrg1 = async function() {
         console.error(`Failed to enroll admin user "org1admin": ${error}`);
         process.exit(1);
     }
+    console.log('************enroll1*******')
 }
 

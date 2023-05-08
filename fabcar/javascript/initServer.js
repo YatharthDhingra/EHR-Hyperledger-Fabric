@@ -21,12 +21,13 @@ async function initLedger() {
     } catch (err) {
       console.log(err);
     }
+    console.log('*******************1**********')
 }
 
 async function initDB(){
     await connectDB(process.env.MONGO_URL);
     //deleting the old data
-    await Collection.deleteMany()
+    await Collection.deleteMany({})
     //now we store data of admins in mongodb
     const admin1 = {
         username : 'org1admin',
@@ -43,6 +44,7 @@ async function initDB(){
     //creating documents
     await Collection.create(admin1)
     await Collection.create(admin2) 
+    console.log('*******************2**********')
 }
 
 //creating doctor identity in wallet and also storing data in mongoDB
@@ -68,6 +70,7 @@ async function enrollAndRegisterDoctors() {
     } catch (error) {
       console.log(error);
     }
+    console.log('*******************3**********')
   }
 
 

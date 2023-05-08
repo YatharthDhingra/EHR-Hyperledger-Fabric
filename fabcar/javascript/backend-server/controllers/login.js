@@ -37,3 +37,5 @@ const login = async(req , res) => {
         res.status(400).send({error: 'Username or password incorrect!'});
     }
 }
+
+module.exports = {login}

@@ -5,3 +5,5 @@ const {updatePatientMedicalDetails,getDoctorById} = require('../controllers/doct
 
 router.route('/patient/:patientId/details/medical').patch(updatePatientMedicalDetails)
 router.route('/doctor/:docId').get(getDoctorById)
+
+module.exports = router

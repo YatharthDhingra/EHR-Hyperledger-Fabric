@@ -5,8 +5,10 @@ const adminRoutes = require('./routes/admin.js')
 const patientRoutes = require('./routes/patient.js')
 const doctorRoutes = require('./routes/doctor.js')
 
-const authenticationMiddleware = require('./middleware/auth.js')
+require('dotenv').config();
+const connectDB = require('../db/connect.js');
 
+const authenticationMiddleware = require('./middleware/auth.js')
 
 const PORT = 3000
 
@@ -19,7 +21,17 @@ app.use(authenticationMiddleware , patientRoutes)
 app.use(authenticationMiddleware , doctorRoutes)
 
 
-app.listen(PORT , () => console.log('Server is istening on port 3000...'))
+const start = async () => {
+    try {
+      // connectDB
+      await connectDB(process.env.MONGO_URL);
+      app.listen(PORT, () => console.log(`Server is listening port ${PORT}...`));
+    } catch (error) {
+      console.log(error);
+    }
+}
+  
+start();
 
 
 
