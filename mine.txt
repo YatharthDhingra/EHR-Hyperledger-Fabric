@@ -2,3 +2,73 @@ changed index.js in chaincode folder
 changed fabcar to patient in startFabric and query.js
 Each transaction must be queried like this 'ClassName:functionName'
 deletePatient and createPatient -> invoke.js
+changes done in CAutils.js in test-application
+
+changes must be done in CAUtils
+
+args dekh lena at all places [] -> ye
+
+STRUCTURE:
+
+Test-Application
+AppUtil.js -> {
+    buildCCPOrg1
+    buildCCPOrg2 
+    buildWallet
+    prettyJSONString
+}
+CAUtil.js -> {
+    buildCAClient 
+    registerAndEnrollUser 
+}
+app.js -> {
+    DEFINED
+    const channelName = 'mychannel';
+    const chaincodeName = 'patient';
+    const mspOrg1 = 'Org1MSP';
+    const mspOrg2 = 'Org2MSP';
+    const walletPath = path.resolve(__dirname, '..' , '..' , 'fabcar' , 'javascript' , 'wallet');
+
+    connectToNetwork(userId)   -> userId should match with the one created in wallet
+    invoke(networkObj , isQuery, func , args) -> args should be array consisting of arr[0] only
+   
+    registerUser(attributes) -> attributes should contain userId , orgId as JSON string -> calls registerAndEnrollUser from CAUtils.js
+    [REMOVED]
+}
+
+---------------------
+
+Fabcar/javascript
+enrollAdmin-org1.js --> {
+    DEFINED:
+    const adminUserId = 'org2admin'
+    const adminPass = 'adminpw'
+
+    enrollAdminOrg1
+}
+enrollAdmin-org2.js --> {
+    DEFINED:
+    const adminUserId = 'org2admin'
+    const adminPass = 'adminpw'     
+
+    enrollAdminOrg2 
+}
+registerUser.js --> {
+    enrollRegisterUser(orgId , userId , attributes) --> used in initServer to register patients as clients in wallet
+    attributes -> {firstName , lastName , role , speciality(if doctor)}
+
+}
+initServer.js --> {
+    initLedger -> uses enrollRegisterUser
+    initDB -> connect to DB and creates document of admin details
+    enrollAndRegisterDoctors -> //creating doctor identity in wallet and also storing data in mongoDB (uses enrollRegisterUser)
+
+    this calls
+    async function main() {
+        await enrollAdminOrg1();
+        await enrollAdminOrg2();
+        await initLedger();
+        await initDB();
+        await enrollAndRegisterDoctors();
+  }
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "orgId": "1",
+        "firstName": "Cristiano",
+        "lastName": "Ronaldo",
+        "speciality": "Neurosurgery"
+    },
+    {
+        "orgId": "2",
+        "firstName": "Lionel",
+        "lastName": "Messi",
+        "speciality": "Cardiology"
+    },
+    {
+        "orgId": "1",
+        "firstName": "Vini",
+        "lastName": "Junior",
+        "speciality": "Cardiology"
+    },
+    {
+        "orgId": "2",
+        "firstName": "Karim",
+        "lastName": "Benzema",
+        "speciality": "Neurosurgery"
+    }
+]

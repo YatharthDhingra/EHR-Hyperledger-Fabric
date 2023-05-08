@@ -75,36 +75,11 @@ class PatientContract extends PrimaryContract{
         await ctx.stub.putState(patientId, JSON.stringify(patient));
     }
 
-    //to update the password of the patient
-    async updatePassword(ctx , args){
-        //args should be JSON string
-        args = JSON.parse(args)
-        let patientId = args.patientId
-        let newPassword = args.newPassword
-
-        if(newPassword === null || newPassword === ''){
-            throw new Error(`Empty or null values shouldn't be passed as password`)
-        }
-
-        const patient = await this.readPatient(ctx , patientId)
-        patient.password = crypto.createHash('sha256').update(newPassword).digest('hex')
-        //now we check if patient had a temp password provided by us before
-        if(patient.pwdTemp){
-            patient.pwdTemp = false //now its not temp
-            patient.changedBy = patientId  //patient data last changed by
-        }
-        await ctx.stub.putState(patientId , JSON.stringify(patient))
-    }
-
     //for patient to get his/her password
     async getPatientPassword(ctx , patientId){
         const patient = await this.readPatient(ctx , patientId)
         //returns both password details
-        let temp = {
-            password : patient.password,
-            pwdTemp : patient.pwdTemp
-        } 
-        return temp
+        return patient.password
     }
 
     //gets patient medical history based on patientId
