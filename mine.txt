@@ -83,4 +83,18 @@ LOGIN routes
 
 ADMIN routes
 /patient/register (post) working
+/doctor/register (post) working
+/patient/all (get) working
+
+PATIENT routes
+/patient/:patientId (get) working
+/patient/:patientId/details/personal (patch) working --> THIS SHOULD ONLY BE EXECUTED BY 'patientId'
+/patient/:patientId/history (get) working
+/doctor/all (get) working
+/patient/:patientId/grant/:doctorId (patch) working
+/patient/:patientId/revoke/:doctorId (patch) working
+
+DOCTOR routes
+/patient/:patientId/details/medical (patch) working
+/doctor/:docId (get) working
 

@@ -1,14 +1,15 @@
 const network = require('../../../../test-application/javascript/app.js')
 const {enrollRegisterUser} = require('../../registerUser.js')
 const Collection = require('../../db_models/model.js')
+const {capitalize} = require('../capitalize.js')
 
 //req.user has {username , role}
 //Creates a patient as an user adds the patient to the wallet and an asset(patient) is added to the ledger
 //res 201 response if asset is created else 400 with a simple json message
 //req.body will have patient data
 const createPatient = async(req , res) => {
-    // const {username , role} = req.user //admin username and role
-    let username = 'org1admin'
+    const {username , role} = req.user //admin username and role
+    
     const networkObj = await network.connectToNetwork(username) //connect to the network as org1admin or org2admin
     
     //we need to provide PID(last id  + 1) as username to this patient
@@ -48,10 +49,14 @@ const createPatient = async(req , res) => {
 }
 
 const createDoctor = async(req , res) => {
-    const {username , role} = req.user //admin username and role
     let orgId = req.body.orgId
     let docUsername = req.body.username
     let docPassword = req.body.password
+
+    const user = await Collection.findOne({username : docUsername})
+    if(user){
+        return res.send("Username is already taken")
+    }
 
     //adding this data to mongoDB database
     await Collection.create({
@@ -64,15 +69,18 @@ const createDoctor = async(req , res) => {
         speciality : req.body.speciality
     })
 
-    const attributes = {firstName : req.body.firstName , lastName : req.body.lastName , role : 'doctor' , speciality : req.body.speciality}
+    let attributes = {firstName : req.body.firstName , lastName : req.body.lastName , role : 'doctor' , speciality : req.body.speciality}
     attributes = JSON.stringify(attributes)
     // Enrol and register the user with the CA and adds the user to the wallet.
-    const response = await enrollRegisterUser(orgId , docUsername , attributes)
-    if (response.error) {
-        await Collection.findOneAndDelete({username : docUsername}) //delete from mongoDB if error
-        res.status(400).send(response.error);
+
+    try{
+        await enrollRegisterUser(orgId , docUsername , attributes)
     }
-    
+    catch(error){
+        await Collection.findOneAndDelete({username : docUsername}) //delete from mongoDB if error
+        res.status(400).send(error);
+    }
+
     //success
     res.status(201).json({msg : 'success' , data : {username : docUsername , password : docPassword}}) 
 }
@@ -80,6 +88,7 @@ const createDoctor = async(req , res) => {
 //Retrieves all the assets(patients) in the ledger
 const getAllPatients = async(req , res) => {
     const {username , role} = req.user //admin username and role
+    
     const networkObj = await network.connectToNetwork(username);
 
     //invoke the smart contract

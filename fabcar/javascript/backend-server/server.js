@@ -16,9 +16,9 @@ app.use(express.json()) //to parse json
 
 //Routes
 app.use(loginRoutes)
-app.use(adminRoutes)
-app.use(authenticationMiddleware , patientRoutes)
-app.use(authenticationMiddleware , doctorRoutes)
+app.use(authenticationMiddleware,adminRoutes)
+app.use(authenticationMiddleware,patientRoutes)
+app.use(authenticationMiddleware,doctorRoutes)
 
 
 const start = async () => {

@@ -1,5 +1,6 @@
 const network = require('../../../../test-application/javascript/app.js')
 const Collection = require('../../db_models/model.js')
+const {capitalize} = require('../capitalize.js')
 
 
 //This method retrives an existing patient from the ledger
@@ -36,7 +37,7 @@ const updatePatientPersonalDetails = async(req , res) => {
 //Retrives the history transaction of an asset(Patient) in the ledger
 const getPatientHistoryById = async(req , res) => {
     const {username , role} = req.user
-    
+
     const patientId = req.params.patientId
 
     const networkObj = await network.connectToNetwork(username)
@@ -50,24 +51,23 @@ const getPatientHistoryById = async(req , res) => {
 
 //getting all doctors from mongoDB
 const getAllDoctors = async(req , res) => {
-    const {username , role} = req.user
-
     const doctorArr = await Collection.find({role : 'doctor'})
     const filteredArr = []
     //filtering username , firstname and lastname of doctor
     for(let i=0;i<doctorArr.length;i++){
-        const docUsername = doctorArr[i].username , firstName = doctorArr[i].firstName , lastName = doctor[i].lastName;
+        const docUsername = doctorArr[i].username , firstName = doctorArr[i].firstName , lastName = doctorArr[i].lastName;
         filteredArr.push({username : docUsername , firstName : firstName , lastName : lastName})
     }
-    res.send(200).send(filteredArr)
+    res.status(200).send(filteredArr)
 }
 
 //patients grant access to doctor
 const grantAccessToDoctor = async(req , res) => {
     const {username , role} = req.user
 
-    const patientId = req.body.patientId
-    const doctorId = req.body.doctorId
+
+    const patientId = req.params.patientId
+    const doctorId = req.params.doctorId
 
     let args = {patientId: patientId, doctorId: doctorId};
     args= [JSON.stringify(args)];
@@ -85,8 +85,8 @@ const grantAccessToDoctor = async(req , res) => {
 const revokeAccessFromDoctor = async(req , res) => {
     const {username , role} = req.user
 
-    const patientId = req.body.patientId
-    const doctorId = req.body.doctorId
+    const patientId = req.params.patientId
+    const doctorId = req.params.doctorId
 
     let args = {patientId: patientId, doctorId: doctorId};
     args= [JSON.stringify(args)];
