@@ -41,7 +41,7 @@ class PrimaryContract extends Contract {
     //Check if patient exists or not based on PID
     async patientExists(ctx, patientId) {
         const response = await ctx.stub.getState(patientId);
-        return (response.length > 0);  
+        return (!!response && response.length > 0);  
     }
 
     //we can search using an attribute i.e. queryString (using Mango in couchDB) , whose selector property must be set up

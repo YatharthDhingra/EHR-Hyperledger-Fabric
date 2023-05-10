@@ -72,3 +72,15 @@ initServer.js --> {
         await enrollAndRegisterDoctors();
   }
 }
+
+
+backend routes
+
+LOGIN routes
+/login (post) for admin working
+/login (post) for doctor working
+/login (post) for patient working
+
+ADMIN routes
+/patient/register (post) working
+

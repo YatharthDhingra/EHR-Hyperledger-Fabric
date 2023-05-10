@@ -17,9 +17,10 @@ const login = async(req , res) => {
     }
 
     if(role == 'patient'){
-        const networkObj = network.connectToNetwork(username)
+        const networkObj = await network.connectToNetwork(username)
         const value = crypto.createHash('sha256').update(password).digest('hex')
         //isQuery -> true , username -> PIDx
+        
         const savedPassword = await network.invoke(networkObj , true , 'PatientContract:getPatientPassword' , username)
         if(savedPassword.toString('utf8') === value){
             userExists = true

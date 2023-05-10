@@ -11,7 +11,7 @@ const FabricCAServices = require('fabric-ca-client');
 const fs = require('fs');
 const path = require('path');
 const {buildCAClient , registerAndEnrollUser} = require('../../test-application/javascript/CAUtil.js')
-const walletPath = path.join(__dirname , './wallet')
+const walletPath = '/home/yatharth/ehr/fabcar/javascript/wallet/'
 const {buildCCPOrg1 , buildCCPOrg2 , buildWallet} = require('../../test-application/javascript/AppUtil.js')
 let mspOrg;
 let adminUserId;

@@ -21,7 +21,6 @@ const channelName = 'mychannel';
 const chaincodeName = 'patient';
 const mspOrg1 = 'Org1MSP';
 const mspOrg2 = 'Org2MSP';
-const walletPath = path.join(process.cwd(), '../../fabcar/javascript/wallet/');
 
 
 //Connects to the network using the username - userId, networkObj contains the paramters using which a connection to the fabric network is possible.
@@ -30,7 +29,7 @@ exports.connectToNetwork = async function(userId) {
   const ccp = buildCCPOrg1();
 
   try {
-    const walletPath = path.join(process.cwd(), '../../fabcar/javascript/wallet/');  //check this
+    const walletPath = path.join('/home/yatharth/ehr/fabcar/javascript/wallet/');  //check this
 
     const wallet = await buildWallet(Wallets, walletPath);
 

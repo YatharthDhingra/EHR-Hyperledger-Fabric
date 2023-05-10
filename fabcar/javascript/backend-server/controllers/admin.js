@@ -7,12 +7,13 @@ const Collection = require('../../db_models/model.js')
 //res 201 response if asset is created else 400 with a simple json message
 //req.body will have patient data
 const createPatient = async(req , res) => {
-    const {username , role} = req.user //admin username and role
-    const networkObj = network.connectToNetwork(username) //connect to the network as org1admin or org2admin
+    // const {username , role} = req.user //admin username and role
+    let username = 'org1admin'
+    const networkObj = await network.connectToNetwork(username) //connect to the network as org1admin or org2admin
     
     //we need to provide PID(last id  + 1) as username to this patient
     const lastId = await network.invoke(networkObj , true , 'AdminContract:getLatestPatientId')
-    req.body.patientId = 'PID' + (parseInt(lastId.slice(3)) + 1);
+    req.body.patientId = 'PID' + (parseInt(lastId.toString().slice(3)) + 1);
 
     req.body.password = Math.random().toString(36).slice(-8); 
     //providing a random password to the patient
@@ -21,22 +22,25 @@ const createPatient = async(req , res) => {
     
     //now we have everything we need to create the patient in req.body
     const data = JSON.stringify(req.body)
+    const args = [data]
 
     //creating a patient through admin smart contract
-    const createPatientRes = await network.invoke(networkObj, false,  'AdminContract:createPatient', req.body.patientId);
+    const createPatientRes = await network.invoke(networkObj, false,  'AdminContract:createPatient', args);
     if (createPatientRes.error) {
-        return res.status(400).send(response.error);
+        return res.status(400).send(createPatientRes.error);
     }
 
     //'attributes' JSON string in which userId, orgId must be present.
-    const orgId = (username === 'org1admin'? 1 : 2)
-    const attributes = JSON.stringify({firstName : req.body.firstName , lastName : req.body.lastName , role : 'patient'})
+    const orgId = (username === 'org1admin'? '1' : '2')
+    const attributes = {firstName : req.body.firstName , lastName : req.body.lastName , role : 'patient'}
 
     //// Enrol and register the user with the CA and adds the user to the wallet.
-    const registerUserRes = await enrollRegisterUser(orgId , req.body.patientId , attributes)
-    if (registerUserRes.error) {
+    try{
+        await enrollRegisterUser(orgId , req.body.patientId , JSON.stringify(attributes))
+    }
+    catch(error){
         await network.invoke(networkObj, false, 'AdminContract:deletePatient', req.body.patientId);
-        return res.send(registerUserRes.error);
+        return res.send(error);
     }
 
     //successful creation
